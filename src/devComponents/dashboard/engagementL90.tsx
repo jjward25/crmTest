@@ -50,9 +50,18 @@ const generateData = (): WeekData[] => {
 
 const data = generateData()
 
+interface EngagementDetails {
+  company: string
+  engagements: number
+}
+
+const isEngagementDetails = (value: any): value is EngagementDetails => {
+  return value && typeof value === "object" && "company" in value && "engagements" in value;
+}
+
 interface CustomTooltipProps {
   active?: boolean
-  payload?: { payload: Record<string, any>; dataKey: string }[]
+  payload?: { payload: Record<string, any>; dataKey: string }[]  // Correctly type payload
   label?: string
 }
 
@@ -63,20 +72,27 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
         <p className="font-bold mb-2">{label}</p>
         {payload.map((entry, index) => {
           const details = entry.payload[`${entry.dataKey}Details`]
-          if (!details) return null
-          return (
-            <div key={index} className="text-sm mb-1">
-              <span className="font-medium">{details.company}: </span>
-              <span>{details.engagements.toLocaleString()} engagements</span>
-              <span className="ml-2">({entry.dataKey})</span>
-            </div>
-          )
+          
+          // Check if details is of type EngagementDetails
+          if (isEngagementDetails(details)) {
+            return (
+              <div key={index} className="text-sm mb-1">
+                <span className="font-medium">{details.company}: </span>
+                <span>{details.engagements.toLocaleString()} engagements</span>
+                <span className="ml-2">({entry.dataKey})</span>
+              </div>
+            )
+          }
+
+          return null
         })}
       </div>
     )
   }
   return null
 }
+
+
 
 export default function MostEngagedCampaignsChart() {
   return (
