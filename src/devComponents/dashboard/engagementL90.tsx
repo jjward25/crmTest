@@ -62,9 +62,10 @@ const isEngagementDetails = (value: unknown): value is EngagementDetails => {
 
 interface CustomTooltipProps {
   active?: boolean
-  payload?: { payload: Record<string, any>; dataKey: string }[] // We still need to specify that it’s an array of objects, but with more precise types
+  payload?: { payload: Record<string, number | EngagementDetails | string>; dataKey: string }[] // more specific type here
   label?: string
 }
+
 
 const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
