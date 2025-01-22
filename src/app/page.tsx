@@ -8,7 +8,7 @@ export default function Home() {
           <PortfolioGraph />
           <CRM />
         </div>
-      </main>
+      </main> 
 
   );
 }
