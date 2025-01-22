@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from "recharts"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 const companies = ["TechCorp", "InnoSoft", "DataDrive", "CloudNine"]
 const stages = ["Prospect", "Qualified", "Customer"]
