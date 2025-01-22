@@ -11,8 +11,18 @@ const stageColors = {
   Customer: "#ffc658",
 }
 
+interface EngagementDetails {
+  company: string
+  engagements: number
+}
+
+interface WeekData {
+  week: string
+  [key: string]: number | EngagementDetails | string
+}
+
 // Generate sample data with each company in only one stage
-const generateData = () => {
+const generateData = (): WeekData[] => {
   const weeks = Array.from({ length: 13 }, (_, i) => `Week ${i + 1}`)
 
   // Assign each company a fixed stage
@@ -22,14 +32,15 @@ const generateData = () => {
   }, {} as Record<string, string>)
 
   return weeks.map((week) => {
-    const weekData: any = { week }
+    const weekData: WeekData = { week } // We explicitly set week here
 
     companies.forEach((company) => {
       const stage = companyStages[company]
-      weekData[`${stage}`] = (weekData[`${stage}`] || 0) + Math.floor(Math.random() * 1000) + 100
+      const currentStageValue = weekData[`${stage}`] as number || 0
+      weekData[`${stage}`] = currentStageValue + Math.floor(Math.random() * 1000) + 100
       weekData[`${stage}Details`] = {
         company,
-        engagements: weekData[`${stage}`]
+        engagements: weekData[`${stage}`] as number
       }
     })
 
@@ -39,12 +50,18 @@ const generateData = () => {
 
 const data = generateData()
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface CustomTooltipProps {
+  active?: boolean
+  payload?: { payload: Record<string, any>; dataKey: string }[]
+  label?: string
+}
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 border border-gray-200 rounded shadow-lg">
         <p className="font-bold mb-2">{label}</p>
-        {payload.map((entry: any, index: number) => {
+        {payload.map((entry, index) => {
           const details = entry.payload[`${entry.dataKey}Details`]
           if (!details) return null
           return (

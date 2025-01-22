@@ -14,14 +14,13 @@ const AlertDialogPortal = ({
   className,
   children,
   ...props
-}: AlertDialogPrimitive.AlertDialogPortalProps & { className?: string }) => (
-  <AlertDialogPrimitive.Portal {...props}>
-    <div className={`fixed inset-0 z-50 flex items-end justify-center sm:items-center ${className}`}>
+}: AlertDialogPrimitive.AlertDialogPortalProps) => (
+  <AlertDialogPrimitive.Portal className={cn(className)} {...props}>
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       {children}
     </div>
   </AlertDialogPrimitive.Portal>
 )
-
 AlertDialogPortal.displayName = AlertDialogPrimitive.Portal.displayName
 
 const AlertDialogOverlay = React.forwardRef<
@@ -59,7 +58,6 @@ AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
 
 const AlertDialogHeader = ({
   className,
-  children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
@@ -74,7 +72,6 @@ AlertDialogHeader.displayName = "AlertDialogHeader"
 
 const AlertDialogFooter = ({
   className,
-  children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div

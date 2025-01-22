@@ -20,7 +20,6 @@ type UseCaseEngagementData = {
   numCustomerEngagements: number;
 };
 
-type StageCategory = "prospect" | "qualified14" | "qualified" | "customer";
 
 const useCaseCategories = [
   "Use Case A",
@@ -31,31 +30,6 @@ const useCaseCategories = [
   "Use Case F",
 ] as const;
 
-
-// Generate dummy data
-const generateUseCaseEngagementData = (
-  useCase: string,
-  focuses: string[],
-  baseNumbers: {
-    prospects: number;
-    qualified14: number;
-    qualified: number;
-    customer: number;
-  }
-): UseCaseEngagementData[] => {
-  return focuses.map((focus) => ({
-    useCase,
-    focus,
-    numberProspectEngagements:
-      baseNumbers.prospects + Math.floor(Math.random() * 200),
-    numberQualifiedIn14Days:
-      baseNumbers.qualified14 + Math.floor(Math.random() * 50),
-    numQualifiedEngagements:
-      baseNumbers.qualified + Math.floor(Math.random() * 70),
-    numCustomerEngagements:
-      baseNumbers.customer + Math.floor(Math.random() * 30),
-  }));
-};
 
 const dummyData: UseCaseEngagementData[] = [
     {
