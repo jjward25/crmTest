@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from "recharts"
 
 const companies = ["TechCorp", "InnoSoft", "DataDrive", "CloudNine"]
 const stages = ["Prospect", "Qualified", "Customer"]
@@ -50,18 +50,19 @@ const generateData = (): WeekData[] => {
 
 const data = generateData()
 
-interface EngagementDetails {
-  company: string
-  engagements: number
+const isEngagementDetails = (value: unknown): value is EngagementDetails => {
+  return (
+    value !== null && // Ensure it's not null
+    typeof value === "object" && // Ensure it's an object
+    "company" in value && // Check if 'company' exists in the object
+    "engagements" in value // Check if 'engagements' exists in the object
+  );
 }
 
-const isEngagementDetails = (value: any): value is EngagementDetails => {
-  return value && typeof value === "object" && "company" in value && "engagements" in value;
-}
 
 interface CustomTooltipProps {
   active?: boolean
-  payload?: { payload: Record<string, any>; dataKey: string }[]  // Correctly type payload
+  payload?: { payload: Record<string, any>; dataKey: string }[] // We still need to specify that it’s an array of objects, but with more precise types
   label?: string
 }
 
@@ -72,7 +73,7 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
         <p className="font-bold mb-2">{label}</p>
         {payload.map((entry, index) => {
           const details = entry.payload[`${entry.dataKey}Details`]
-          
+
           // Check if details is of type EngagementDetails
           if (isEngagementDetails(details)) {
             return (
@@ -91,8 +92,6 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   }
   return null
 }
-
-
 
 export default function MostEngagedCampaignsChart() {
   return (

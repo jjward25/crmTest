@@ -174,7 +174,7 @@ export default function EngagementMetricsTable() {
                 ))}
 
                 {/* Subtotal Row */}
-                <TableRow className="bg-gray-200 font-semibold">
+                <TableRow className="bg-primary-3 font-semibold">
                   <TableCell>Subtotal</TableCell>
                   <TableCell></TableCell>
                   <TableCell className="text-right">
