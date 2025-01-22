@@ -31,12 +31,6 @@ const useCaseCategories = [
   "Use Case F",
 ] as const;
 
-const categoryMap: Record<StageCategory, keyof UseCaseEngagementData> = {
-  prospect: "numberProspectEngagements",
-  qualified14: "numberQualifiedIn14Days",
-  qualified: "numQualifiedEngagements",
-  customer: "numCustomerEngagements",
-};
 
 // Generate dummy data
 const generateUseCaseEngagementData = (
