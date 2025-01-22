@@ -25,7 +25,7 @@ export default function PortfolioGraphAccordion() {
 
       {/* Accordion Content */}
       {isExpanded && (
-        <div className="grid grid-cols-12 grid-rows-[400px_450px_400px] gap-4 w-full bg-primary-1 rounded-xl overflow-auto pt-2">
+        <div className="grid grid-cols-12 grid-rows-[400px_450px] gap-4 w-full bg-primary-1 rounded-xl overflow-auto pt-2">
           {/* Tooltip */}
           <div className="absolute top-2 left-2 z-10">
             <CustomTooltip
