@@ -210,7 +210,6 @@ const processDataForWebChart = (
 const WebChart = ({
   data,
   title,
-  maxValues,
 }: {
   data: { category: string; value: number; actualValue: number }[];
   title: string;
