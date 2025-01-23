@@ -76,7 +76,46 @@ const dummyData = [
     numQualifiedEngagements: 34,
     numCustomerEngagements: 45,
   },
-  // Add the rest of the data here
+  {
+    useCase: "Use Case B",
+    focus: "Company Brand",
+    numberProspectEngagements: 16,
+    numberQualifiedIn14Days: 2,
+    numQualifiedEngagements: 6,
+    numCustomerEngagements: 26,
+  },
+  {
+    useCase: "Use Case C",
+    focus: "Security",
+    numberProspectEngagements: 12,
+    numberQualifiedIn14Days: 1,
+    numQualifiedEngagements: 14,
+    numCustomerEngagements: 5,
+  },
+  {
+    useCase: "Use Case D",
+    focus: "Cloud Solutions",
+    numberProspectEngagements: 18,
+    numberQualifiedIn14Days: 3,
+    numQualifiedEngagements: 4,
+    numCustomerEngagements: 15,
+  },
+  {
+    useCase: "Use Case E",
+    focus: "Enterprise",
+    numberProspectEngagements: 54,
+    numberQualifiedIn14Days: 18,
+    numQualifiedEngagements: 4,
+    numCustomerEngagements: 2,
+  },
+  {
+    useCase: "Use Case F",
+    focus: "Product A",
+    numberProspectEngagements: 24,
+    numberQualifiedIn14Days: 7,
+    numQualifiedEngagements: 4,
+    numCustomerEngagements: 0,
+  },
 ];
 
 const processStackedData = (
@@ -87,10 +126,10 @@ const processStackedData = (
     if (!matchingData)
       return { category, prospect: 0, qualified14: 0, qualified: 0, customer: 0 };
 
-    const prospect = matchingData.numberProspectEngagements;
-    const qualified14 = prospect + matchingData.numberQualifiedIn14Days;
-    const qualified = qualified14 + matchingData.numQualifiedEngagements;
-    const customer = qualified + matchingData.numCustomerEngagements;
+    const prospect = matchingData.numberProspectEngagements || 0;
+    const qualified14 = matchingData.numberProspectEngagements + matchingData.numberQualifiedIn14Days || 0;
+    const qualified = qualified14 + matchingData.numQualifiedEngagements || 0;
+    const customer = qualified + matchingData.numCustomerEngagements || 0;
 
     return { category, prospect, qualified14, qualified, customer };
   });
