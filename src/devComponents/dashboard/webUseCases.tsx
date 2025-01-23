@@ -25,13 +25,6 @@ interface CustomTooltipProps {
   label?: string;
 }
 
-const isEngagementDetails = (
-  details: unknown
-): details is EngagementDetails =>
-  typeof details === "object" &&
-  details !== null &&
-  "company" in details &&
-  "engagements" in details;
 
   const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     if (active && payload && payload.length) {

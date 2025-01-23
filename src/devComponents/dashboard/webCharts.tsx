@@ -212,9 +212,9 @@ const WebChart = ({
   title,
   maxValues,
 }: {
-  data: { category: string; value: number; actualValue: number }[]
-  title: string
-  maxValues: Record<string, number>
+  data: { category: string; value: number; actualValue: number }[];
+  title: string;
+  maxValues: Record<string, number>; // Make sure maxValues is used here
 }) => (
   <div className="w-full max-w-xl mx-auto">
     <h2 className="text-xl font-bold text-center">{title}</h2>
@@ -229,22 +229,25 @@ const WebChart = ({
           <Tooltip
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
-                const data = payload[0].payload
+                const data = payload[0].payload;
                 return (
                   <div className="bg-primary-3 p-2 border rounded shadow">
                     <p className="font-bold">{data.category}</p>
                     <p>Actual Value: {data.actualValue}</p>
+                    {/* Display actual value from maxValues for context */}
+                    <p>Max Value for Category: {maxValues[data.category]}</p>
                   </div>
-                )
+                );
               }
-              return null
+              return null;
             }}
           />
         </RadarChart>
       </ResponsiveContainer>
     </div>
   </div>
-)
+);
+
 
 // Main Component - Rendering Multiple Charts
 export default function EngagementWebCharts() {
