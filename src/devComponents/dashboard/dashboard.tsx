@@ -13,14 +13,16 @@ export default function PortfolioGraphAccordion() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="mt-6 mx-2 bg-primary-1 overflow-hidden mb-4 rounded-xl text-white pr-4">
+    <div className={`mt-6 mx-2 bg-primary-1 overflow-hidden mb-4 rounded-xl text-white ${isExpanded ? 'border border-primary-2' : ''}`}>
       {/* Accordion Header */}
       <div
-        className="flex justify-between items-center cursor-pointer rounded-md"
+        className={`flex justify-between items-center cursor-pointer ${isExpanded ? 'border-b border-primary-2' : ''}`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <h2 className="text-xl font-semibold bg-primary-3 rounded-l-lg px-2 py-1">Dashboard</h2>
-        {isExpanded ? <ChevronUp /> : <ChevronDown />}
+        <h2 className={`text-xl font-semibold bg-primary-3 px-2 py-1 rounded-tl-xl`}>Dashboard</h2>
+        <div className="flex items-center mr-4">
+          {isExpanded ? <ChevronUp /> : <ChevronDown />}
+        </div>
       </div>
 
       {/* Accordion Content */}

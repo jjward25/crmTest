@@ -11,15 +11,59 @@ import {
   Tooltip,
 } from "recharts";
 
-type UseCaseEngagementData = {
-  useCase: string;
-  focus: string;
-  numberProspectEngagements: number;
-  numberQualifiedIn14Days: number;
-  numQualifiedEngagements: number;
-  numCustomerEngagements: number;
+type EngagementDetails = {
+  company: string;
+  engagements: number;
 };
 
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: {
+    payload: Record<string, number | EngagementDetails | string>;
+    dataKey: string;
+  }[]; // More specific type here
+  label?: string;
+}
+
+const isEngagementDetails = (
+  details: unknown
+): details is EngagementDetails =>
+  typeof details === "object" &&
+  details !== null &&
+  "company" in details &&
+  "engagements" in details;
+
+  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-primary-3 p-2 border border-gray-200 rounded shadow-lg">
+          <p className="font-bold text-white text-md">{label}</p>
+          {payload.map((entry, index) => (
+            <div key={index} className="text-sm text-gray-700">
+              <span className="font-medium capitalize">
+                {formatDataKey(entry.dataKey)}:{" "}
+              </span>
+              <span>{entry.payload[entry.dataKey].toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+  
+  // Utility function to format data keys
+  const formatDataKey = (key: string): string => {
+    const keyMap: Record<string, string> = {
+      prospect: "Prospect",
+      qualified14: "Qualified in 14 Days",
+      qualified: "Qualified",
+      customer: "Customer",
+    };
+    return keyMap[key] || key;
+  };
+  
+  
 
 const useCaseCategories = [
   "Use Case A",
@@ -30,61 +74,20 @@ const useCaseCategories = [
   "Use Case F",
 ] as const;
 
+const dummyData = [
+  {
+    useCase: "Use Case A",
+    focus: "Product A",
+    numberProspectEngagements: 44,
+    numberQualifiedIn14Days: 12,
+    numQualifiedEngagements: 34,
+    numCustomerEngagements: 45,
+  },
+  // Add the rest of the data here
+];
 
-const dummyData: UseCaseEngagementData[] = [
-    {
-      useCase: "Use Case A",
-      focus: "Product A",
-      numberProspectEngagements: 44,
-      numberQualifiedIn14Days: 12,
-      numQualifiedEngagements: 34,
-      numCustomerEngagements: 45,
-    },
-    {
-      useCase: "Use Case B",
-      focus: "Company Brand",
-      numberProspectEngagements: 16,
-      numberQualifiedIn14Days: 2,
-      numQualifiedEngagements: 6,
-      numCustomerEngagements: 26,
-    },
-    {
-      useCase: "Use Case C",
-      focus: "Security",
-      numberProspectEngagements: 12,
-      numberQualifiedIn14Days: 1,
-      numQualifiedEngagements: 14,
-      numCustomerEngagements: 5,
-    },
-    {
-      useCase: "Use Case D",
-      focus: "Cloud Solutions",
-      numberProspectEngagements: 18,
-      numberQualifiedIn14Days: 3,
-      numQualifiedEngagements: 4,
-      numCustomerEngagements: 15,
-    },
-    {
-      useCase: "Use Case E",
-      focus: "Enterprise",
-      numberProspectEngagements: 54,
-      numberQualifiedIn14Days: 18,
-      numQualifiedEngagements: 4,
-      numCustomerEngagements: 2,
-    },
-    {
-      useCase: "Use Case F",
-      focus: "Product A",
-      numberProspectEngagements: 24,
-      numberQualifiedIn14Days: 7,
-      numQualifiedEngagements: 4,
-      numCustomerEngagements: 0,
-    },
-  ]
-
-// Combine data for all stages and calculate cumulative values
 const processStackedData = (
-  data: UseCaseEngagementData[]
+  data: typeof dummyData
 ): { category: string; prospect: number; qualified14: number; qualified: number; customer: number }[] => {
   return useCaseCategories.map((category) => {
     const matchingData = data.find((item) => item.useCase === category);
@@ -100,13 +103,11 @@ const processStackedData = (
   });
 };
 
-
-// Stacked radar chart component
 const UseCaseWebChart = ({
   data,
   featureMaxValues,
 }: {
-  data: { category: string; prospect: number; qualified14:number; qualified: number; customer: number }[];
+  data: { category: string; prospect: number; qualified14: number; qualified: number; customer: number }[];
   featureMaxValues: Record<string, number>;
 }) => (
   <div className="w-full max-w-xl mx-auto">
@@ -146,7 +147,7 @@ const UseCaseWebChart = ({
             fill="#8884d8"
             fillOpacity={0.6}
           />
-          <Tooltip formatter={(value) => value.toLocaleString()} />
+          <Tooltip content={<CustomTooltip />} />
         </RadarChart>
       </ResponsiveContainer>
     </div>
@@ -155,7 +156,7 @@ const UseCaseWebChart = ({
 
 export default function StackedUseCaseWebChart() {
   const [stackedData, setStackedData] = useState<
-    { category: string; prospect: number; qualified14:number; qualified: number; customer: number }[]
+    { category: string; prospect: number; qualified14: number; qualified: number; customer: number }[]
   >([]);
   const [featureMaxValues, setFeatureMaxValues] = useState<Record<string, number>>({});
 
@@ -165,14 +166,19 @@ export default function StackedUseCaseWebChart() {
 
     const maxValues = useCaseCategories.reduce((acc, category) => {
       const maxValue = Math.max(
-        ...dummyData.map((item) => Math.max(
-          item.numberProspectEngagements,
-          item.numberQualifiedIn14Days+item.numberProspectEngagements,
-          item.numQualifiedEngagements + item.numberProspectEngagements + item.numberQualifiedIn14Days,
-          item.numCustomerEngagements +
+        ...dummyData.map((item) =>
+          Math.max(
+            item.numberProspectEngagements,
+            item.numberQualifiedIn14Days + item.numberProspectEngagements,
             item.numQualifiedEngagements +
-            item.numberProspectEngagements + item.numberQualifiedIn14Days
-        ))
+              item.numberProspectEngagements +
+              item.numberQualifiedIn14Days,
+            item.numCustomerEngagements +
+              item.numQualifiedEngagements +
+              item.numberProspectEngagements +
+              item.numberQualifiedIn14Days
+          )
+        )
       );
       acc[category] = maxValue;
       return acc;

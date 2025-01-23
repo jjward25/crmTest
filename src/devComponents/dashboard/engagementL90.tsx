@@ -70,15 +70,15 @@ interface CustomTooltipProps {
 const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-4 border border-gray-200 rounded shadow-lg">
-        <p className="font-bold mb-2">{label}</p>
+      <div className="bg-primary-3 p-1 border border-gray-200 rounded shadow-lg">
+        <p className="font-bold bg-primary-1 px-1 rounded-md">{label}</p>
         {payload.map((entry, index) => {
           const details = entry.payload[`${entry.dataKey}Details`]
 
           // Check if details is of type EngagementDetails
           if (isEngagementDetails(details)) {
             return (
-              <div key={index} className="text-sm mb-1">
+              <div key={index} className="text-sm bg-primary-3 p-2 rounded-md">
                 <span className="font-medium">{details.company}: </span>
                 <span>{details.engagements.toLocaleString()} engagements</span>
                 <span className="ml-2">({entry.dataKey})</span>

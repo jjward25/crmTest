@@ -15,7 +15,7 @@ export function RelatedAccounts({ accounts }: RelatedAccountsProps) {
   return (
     <Card className={cn("bg-primary-1 h-full")}>
       <CardHeader>
-        <CardTitle>Related Accounts</CardTitle>
+        <CardTitle>Related Accounts <span className={cn("w-full text-primary-2 font-light text-xs ml-2")}>Click an Account to View History</span></CardTitle>
       </CardHeader>
       <CardContent>
         <div className={cn("grid grid-cols-2 gap-3 mt-3")}>
@@ -69,7 +69,7 @@ export function RelatedAccounts({ accounts }: RelatedAccountsProps) {
 
         {selectedAccount && (
           <div className={cn("fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50")}>
-            <div className={cn("bg-primary-1 p-4 rounded-lg w-3/4 h-3/4 overflow-auto")}>
+            <div className={cn("bg-primary-1 p-4 rounded-lg w-3/4 h-3/4 overflow-auto relative")}>
               <h2 className={cn("text-2xl font-bold text-primary-5 mb-4")}>{selectedAccount.name}</h2>
               <div className={cn("grid grid-cols-2 gap-4")}>
                 <ActivityAndEngagement events={selectedAccount.events} />
@@ -83,7 +83,7 @@ export function RelatedAccounts({ accounts }: RelatedAccountsProps) {
                 className={cn(
                   "mt-4 px-4 py-2 rounded",
                   "bg-primary-5 text-white",
-                  "hover:bg-primary-4 transition-colors"
+                  "hover:bg-primary-4 transition-colors absolute top-4 right-4"
                 )}
                 onClick={() => setSelectedAccount(null)}
               >
