@@ -234,8 +234,7 @@ const WebChart = ({
                   <div className="bg-primary-3 p-2 border rounded shadow">
                     <p className="font-bold">{data.category}</p>
                     <p>Actual Value: {data.actualValue}</p>
-                    {/* Display actual value from maxValues for context */}
-                    <p>Max Value for Category: {maxValues[data.category]}</p>
+
                   </div>
                 );
               }
