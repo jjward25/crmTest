@@ -47,5 +47,5 @@ export function OrgChart({ contacts }: OrgChartProps) {
       <div className={cn("flex flex-wrap justify-center gap-4 bg-gradient-to-r from-primary-3/50 to-primary-4 border border-primary-2 mt-2 p-2 rounded-md")}>{hierarchy.map(renderContact)}</div>
     </div>
   )
-}
+} 
 
