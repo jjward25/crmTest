@@ -13,7 +13,7 @@ export function ContactModule({  contacts }: AccountDetailsProps) {
   return (
 
 
-      <Card className={cn("bg-primary-1 border-primary-3")}>
+      <Card className={cn("bg-primary-5 border border-primary-3")}>
         <CardHeader>
           <CardTitle>Org Chart</CardTitle>
         </CardHeader>

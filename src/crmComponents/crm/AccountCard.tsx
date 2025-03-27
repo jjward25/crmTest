@@ -29,7 +29,7 @@ export function AccountCard({ account, relatedAccounts }: AccountCardProps) {
   return (
     <div
       className={cn(
-        "bg-primary-1 rounded-lg overflow-hidden shadow-lg",
+        "bg-primary-5 rounded-lg overflow-hidden shadow-lg",
         "transition-all duration-300 ease-in-out hover:shadow-2xl",
       )}
     >

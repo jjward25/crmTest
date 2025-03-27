@@ -25,7 +25,7 @@ export function Toolbar({ filters, onFilterChange }: ToolbarProps) {
 
   return (
     <div className={cn("flex flex-col md:flex-row space-x-4 mb-6 w-full items-start")}>
-      <div className="flex flex-col items-center bg-primary-1 rounded-lg text-center p-3 pt-1 min-w-36 w-fit border border-primary-3">
+      <div className="flex flex-col items-center bg-primary-5 rounded-lg text-center p-3 pt-1 min-w-36 w-fit border border-primary-3">
         <div className="">
           <Image aria-hidden src="/serviceIcon.png" alt="Service Icon" width={64} height={24} />
         </div>
@@ -39,7 +39,7 @@ export function Toolbar({ filters, onFilterChange }: ToolbarProps) {
           value={filters.accountName}
           onChange={handleInputChange}
           className={cn(
-            "bg-primary-1 text-white border-primary-3 min-w-[120px] w-fit text-sm",
+            "bg-primary-5 text-white border-primary-3 min-w-[120px] w-fit text-sm",
             "focus:border-primary-5 focus:ring-1 focus:ring-primary-5",
           )}
         />
@@ -49,7 +49,7 @@ export function Toolbar({ filters, onFilterChange }: ToolbarProps) {
           value={filters.accountOwner}
           onChange={handleInputChange}
           className={cn(
-            "bg-primary-1 text-white border-primary-3 min-w-[125px] w-fit",
+            "bg-primary-5 text-white border-primary-3 min-w-[125px] w-fit",
             "focus:border-primary-5 focus:ring-1 focus:ring-primary-5",
           )}
         />
@@ -59,7 +59,7 @@ export function Toolbar({ filters, onFilterChange }: ToolbarProps) {
           value={filters.csm}
           onChange={handleInputChange}
           className={cn(
-            "bg-primary-1 text-white border-primary-3 min-w-[125px] w-fit",
+            "bg-primary-5 text-white border-primary-3 min-w-[125px] w-fit",
             "focus:border-primary-5 focus:ring-1 focus:ring-primary-5",
           )}
         />
@@ -69,14 +69,14 @@ export function Toolbar({ filters, onFilterChange }: ToolbarProps) {
           value={filters.stage}
           onChange={handleInputChange}
           className={cn(
-            "bg-primary-1 text-white border-primary-3 min-w-[125px] w-fit",
+            "bg-primary-5 text-white border-primary-3 min-w-[125px] w-fit",
             "focus:border-primary-5 focus:ring-1 focus:ring-primary-5",
           )}
         />
         <Button
           variant="outline"
           className={cn(
-            "bg-primary-1 text-white border-primary-3 min-w-[125px] w-fit",
+            "bg-primary-5 text-white border-primary-3 min-w-[125px] w-fit",
             "hover:bg-primary-5 hover:border-primary-3",
           )}
         >

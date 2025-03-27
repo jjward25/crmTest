@@ -9,11 +9,11 @@ import EngagementSummaryTable from "./engagementSummaryTable";
 import EngagementWebCharts from "./webCharts";
 import EngagementUseCaseCharts from "./webUseCases";
 
-export default function PortfolioGraphAccordion() {
+export default function Dashboard() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className={`mt-6 mx-2 bg-primary-1 overflow-hidden mb-4 rounded-xl text-white ${isExpanded ? 'border border-primary-2' : ''}`}>
+    <div className={`mt-6 mx-2 bg-primary-5 overflow-hidden mb-4 rounded-xl text-white ${isExpanded ? 'border border-primary-2' : ''}`}>
       {/* Accordion Header */}
       <div
         className={`flex justify-between items-center cursor-pointer ${isExpanded ? 'border-b border-primary-2' : ''}`}
@@ -27,7 +27,7 @@ export default function PortfolioGraphAccordion() {
 
       {/* Accordion Content */}
       {isExpanded && (
-        <div className="grid grid-cols-12 grid-rows-[400px_450px] gap-4 w-full bg-primary-1 rounded-xl overflow-auto pt-2">
+        <div className="grid grid-cols-12 grid-rows-[400px_450px] gap-4 w-full bg-primary-5 rounded-xl overflow-auto pt-2">
           {/* Tooltip */}
           <div className="absolute top-2 left-2 z-10">
             <CustomTooltip

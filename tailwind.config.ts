@@ -11,13 +11,14 @@ const config = {
   theme: {
     extend: {
       colors: {
-        //Pale Turqoise, Tinted White, Dark Tan, Black, Dark Purple
+        //Pale Turqoise, Tinted White, Black, 
         primary: {
-          1: '#243447',
-          2: '#cdba96',
-          3: '#869ead',
-          4: '#587f76',
-          5: '#243447'
+          0: '#ffffff', // white
+          1: '#ebecf0', // grey
+          2: '#cdba96', // tan
+          3: '#869ead', //Pale Turqoise
+          4: '#587f76', //green
+          5: '#243447' // dark purple
         }
       }
     },

@@ -21,7 +21,7 @@ export function Playbook({ availableCampaigns, assignedCampaigns, onAssignCampai
   }
 
   return (
-    <Card className={cn("bg-primary-1 border-primary-3")}>
+    <Card className={cn("bg-primary-5 border-primary-3")}>
       <CardHeader>
         <CardTitle>Current Playbook</CardTitle>
       </CardHeader>

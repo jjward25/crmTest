@@ -13,7 +13,7 @@ export function RelatedAccounts({ accounts }: RelatedAccountsProps) {
   const [selectedAccount, setSelectedAccount] = useState<RelatedAccount | null>(null)
 
   return (
-    <Card className={cn("bg-primary-1 h-full")}>
+    <Card className={cn("bg-primary-5 h-full")}>
       <CardHeader>
         <CardTitle>Related Accounts <span className={cn("w-full text-primary-2 font-light text-xs ml-2")}>Click an Account to View History</span></CardTitle>
       </CardHeader>
@@ -25,18 +25,18 @@ export function RelatedAccounts({ accounts }: RelatedAccountsProps) {
               onClick={() => setSelectedAccount(account)}
               className={cn(
                 "p-3 rounded-lg",
-                "bg-primary-4/90 hover:bg-primary-4",
+                "bg-gradient-to-r from-primary-3/50 to-primary-4",
                 "border border-primary-3",
                 "shadow-sm hover:shadow-md transition-all",
                 "cursor-pointer"
               )}
             >
-              <div className={cn("font-semibold text-primary-5 mb-1")}>{account.name}</div>
+              <div className={cn("font-semibold text-primary-1 mb-1")}>{account.name}</div>
               <div className={cn(
                   "px-2 py-1 rounded-full text-xs",
-                  "bg-primary-3/20 border border-primary-3/30",
-                  account.similarityScore >= 75 ? "text-green-500 font-semibold bg-primary-1" :
-                  account.similarityScore >= 50 ? "text-primary-3 bg-primary-1" :
+                  "bg-primary-3/20 border border-primary-2/30",
+                  account.similarityScore >= 75 ? "text-primary-4 font-semibold bg-primary-2" :
+                  account.similarityScore >= 50 ? "text-primary-3 bg-primary-2" :
                   "text-gray-600 bg-gray-100"
                 )}>
                   {account.similarityScore}% Match

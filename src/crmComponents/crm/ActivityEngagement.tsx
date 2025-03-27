@@ -23,18 +23,18 @@ export function ActivityAndEngagement({ events }: { events: Event[] }) {
           {events.map((event, index) => (
             <div key={index} className={cn("p-4 rounded-lg border-primary-4 bg-primary-1 border-[2px]")}>
               <div className={cn("flex justify-between items-center mb-2")}>
-                <span className={cn("font-semibold text-primary-2")}>{event.type}</span>
+                <span className={cn("font-semibold text-primary-5")}>{event.type}</span>
                 <span className={cn("text-sm text-primary-3")}>{event.date}</span>
               </div>
               <p className={cn("text-primary-4 mb-2")}>{event.description}</p>
               {event.campaign && (
                 <div className={cn("text-sm text-primary-3")}>
-                  <div className={cn("font-semibold")}>Campaign: <span className={cn("font-normal")}>{event.campaign.name}</span></div>
-                  <div className={cn("font-semibold")}>Focus: <span className={cn("font-normal")}>{event.campaign.focus}</span></div>
+                  <div className={cn("font-semibold text-primary-5")}>Campaign: <span className={cn("font-normal text-primary-3")}>{event.campaign.name}</span></div>
+                  <div className={cn("font-semibold text-primary-5")}>Focus: <span className={cn("font-normal text-primary-3")}>{event.campaign.focus}</span></div>
                 </div>
               )}
               {event.pagesViewed && (
-                <div className={cn("text-sm text-primary-3")}>Pages Viewed: <span className={cn("font-normal")}>{event.pagesViewed.join(", ")}</span></div>
+                <div className={cn("font-semibold text-sm text-primary-5")}>Pages Viewed: <span className={cn("font-normal text-primary-3")}>{event.pagesViewed.join(", ")}</span></div>
               )}
             </div>
           ))}
