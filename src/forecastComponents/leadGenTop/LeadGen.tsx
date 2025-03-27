@@ -1,6 +1,5 @@
 import LGBlurb from './blurb'
 import QualifiedAccountsTrend from './charts/QualifiedAccountsTrend'
-import LeadConversionSankey from './charts/ConversionSankey'
 import MonthlyQualificationsTrend from './charts/MonthlyQualificationsTrend'
 import AccountsARRTrend from './charts/AccountsARRTrend'
 import QualifiedAccountsTrendTable from './charts/QualifiedTable'

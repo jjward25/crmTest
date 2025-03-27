@@ -6,11 +6,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-interface Contact {
-  [key: string]: string | number | Date | undefined;
-  "Qualified Date"?: string | number | Date;
-  "ARR"?: number;
-}
 
 export default function ForecastARR() {
   const [projectedARR, setProjectedARR] = useState<number>(0);

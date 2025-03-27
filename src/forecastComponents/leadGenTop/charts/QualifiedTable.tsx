@@ -64,7 +64,7 @@ export default function QualifiedAccountsTrendTable() {
           return dateObj && dateObj.isValid() ? dateObj : null;
         }
 
-        (accounts as Contact[]).forEach((contact, index) => {
+        (accounts as Contact[]).forEach((contact) => {
           const qualifiedDateValue = contact["Qualified Date"];
           const qualifiedDateObj = processDate(qualifiedDateValue);
           if (!qualifiedDateObj) {

@@ -87,7 +87,6 @@ export default function AccountsBarTrend() {
             if (!dateObj) return;
 
             const rawMonth = dateObj.format("YYYY-MM");
-            const displayMonth = dateObj.format("MMM YYYY");
 
             if (!last18Months.includes(rawMonth)) return; // Filter only last 18 months
 

@@ -6,11 +6,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-interface Contact {
-  [key: string]: string | number | Date | undefined;
-  "Qualified Date"?: string | number | Date;
-}
-
 export default function QualificationsForecast() {
   const [forecast, setForecast] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -54,7 +49,6 @@ export default function QualificationsForecast() {
           }
         });
 
-        const currentMonth = today.format("YYYY-MM");
         const last3MonthsData: number[] = [];
         const last12MonthsData: number[] = [];
 

@@ -78,7 +78,6 @@ export default function AccountsARRTrendLine() {
           if (!qualifiedDate) return;
 
           const rawMonth = qualifiedDate.format("YYYY-MM");
-          const displayMonth = qualifiedDate.format("MMM YYYY");
 
           if (!last18Months.includes(rawMonth)) return;
 
