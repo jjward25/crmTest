@@ -37,7 +37,7 @@ export default function QualifiedAccountsTrendTable() {
         const groupedData: { [key: string]: number } = {};
         const wonAccountsData: { [key: string]: number } = {};
         const arrData: { [key: string]: number[] } = {};
-        const today = dayjs();
+        const today = dayjs('2025-03-31');
         const last18Months = [...Array(13)].map((_, i) =>
           today.subtract(i, "month").format("YYYY-MM")
         );
@@ -85,12 +85,11 @@ export default function QualifiedAccountsTrendTable() {
           const closedDateObj = processDate(closedDateValue);
           const arr = contact["ARR"] || 0;
 
-          const wonStages = ['4 - Customer', '5b - Churned'];
+          const wonStages = ['4 - Customer'];
           if (
             closedDateObj &&
             last18Months.includes(closedDateObj.format("YYYY-MM")) &&
-            wonStages.some(s => stage.trim().toLowerCase() === s.trim().toLowerCase()) &&
-            closedDateObj.format("YYYY-MM") === qualifiedRawMonth // Ensure Closed Date is in the same calendar month as Qualified Date
+            wonStages.some(s => stage.trim().toLowerCase() === s.trim().toLowerCase())            
           ) {
             const closedRawMonth = closedDateObj.format("YYYY-MM");
             wonAccountsData[closedRawMonth] = (wonAccountsData[closedRawMonth] || 0) + 1;
@@ -162,7 +161,7 @@ export default function QualifiedAccountsTrendTable() {
   return (
     <div>
       <div className="border border-primary-3 p-4 rounded-md bg-primary-5 min-h-[400px] w-full">
-        <h2 className="text-primary-3 font-semibold mb-4">Net Qualified Accounts</h2>
+        <h2 className="text-primary-2 font-semibold mb-4">Net Qualified Accounts</h2>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>

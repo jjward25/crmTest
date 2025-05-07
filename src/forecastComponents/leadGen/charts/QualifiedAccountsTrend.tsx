@@ -28,7 +28,7 @@ export default function QualifiedLineTrend() {
         const { accounts } = await fetchExcel("/data/crm_data.xlsx");
 
         const groupedData: { [key: string]: number } = {};
-        const today = dayjs();
+        const today = dayjs('2025-03-31');
         const last18Months = [...Array(13)].map((_, i) =>
           today.subtract(i, "month").format("YYYY-MM")
         );
@@ -92,7 +92,7 @@ export default function QualifiedLineTrend() {
 
   return (
     <div className="border border-primary-3 p-4 rounded-md bg-primary-5 min-h-[200px] w-full">
-      <h2 className="text-primary-3 font-semibold">Qualified Accounts by Month</h2>
+      <h2 className="text-primary-2 font-semibold">Qualified Accounts by Month</h2>
       <div style={{ height: "200px", width: "100%" }}>
         <ResponsiveLine
           data={chartData}

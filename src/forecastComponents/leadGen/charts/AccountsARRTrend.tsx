@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { fetchExcel } from "@/lib/excelLoader";
 import { ResponsiveLine } from "@nivo/line";
@@ -7,7 +6,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-// Define an interface for the Account data with explicit typing
 interface Account {
   [key: string]: string | number | Date | undefined;
   "Qualified Date"?: string | number | Date;
@@ -15,7 +13,6 @@ interface Account {
   "ARR"?: number;
 }
 
-// Modify the interface to be compatible with LineDatum
 interface GroupedDataItem {
   id: string;
   data: { x: string; y: number }[];
@@ -41,7 +38,7 @@ export default function AccountsARRTrendLine() {
           Open: {}
         };
 
-        const today = dayjs();
+        const today = dayjs('2025-03-31');
         const last18Months = [...Array(13)].map((_, i) =>
           today.subtract(i, "month").format("YYYY-MM")
         );
@@ -54,7 +51,7 @@ export default function AccountsARRTrendLine() {
           if (dateValue instanceof Date) {
             dateObj = dayjs(dateValue);
           } else if (typeof dateValue === "number") {
-            dateObj = dayjs("1899-12-30").add(dateValue, "day"); // Convert Excel serial number
+            dateObj = dayjs("1899-12-30").add(dateValue, "day");
           } else if (typeof dateValue === "string") {
             const formats = ["YYYY-MM-DD", "MM/DD/YYYY", "DD/MM/YYYY", "M/D/YYYY"];
             for (const format of formats) {
@@ -69,7 +66,6 @@ export default function AccountsARRTrendLine() {
           return dateObj && dateObj.isValid() ? dateObj : null;
         }
 
-        // Type assertion to ensure Account type
         (accounts as Account[]).forEach((Account) => {
           const qualifiedDate = processDate(Account["Qualified Date"]);
           const stage = Account["Stage"];
@@ -81,7 +77,6 @@ export default function AccountsARRTrendLine() {
 
           if (!last18Months.includes(rawMonth)) return;
 
-          // Accumulate total ARR by month and stage
           if (stage === '4 - Customer' || stage === '5b - Churned') {
             groupedData.Won[rawMonth] = (groupedData.Won[rawMonth] || 0) + arr;
           } else if (stage === '5a - Closed Lost') {
@@ -91,7 +86,6 @@ export default function AccountsARRTrendLine() {
           }
         });
 
-        // Create line chart data
         const processedData: GroupedDataItem[] = [
           {
             id: 'Won',
@@ -116,8 +110,6 @@ export default function AccountsARRTrendLine() {
           }
         ];
 
-        console.log("Processed ARR Data:", processedData);
-
         setChartData(processedData);
       } catch (error) {
         console.error("Error loading data:", error);
@@ -134,16 +126,16 @@ export default function AccountsARRTrendLine() {
 
   return (
     <div className="border border-primary-3 p-4 rounded-md bg-primary-5 min-h-[200px] w-full">
-      <h2 className="text-primary-3 font-semibold">{`Total ARR by Qualified Date`}</h2>
+      <h2 className="text-primary-2 font-semibold">{`Total ARR by Qualified Date`}</h2>
       <div style={{ height: "200px", minHeight: "200px", width: "100%" }}>
         <ResponsiveLine
           data={chartData}
           margin={{ top: 15, right: 15, bottom: 80, left: 50 }}
           xScale={{ type: 'point' }}
-          yScale={{ 
-            type: 'linear', 
-            min: 'auto', 
-            max: 'auto'
+          yScale={{
+            type: 'linear',
+            min: 'auto',
+            max: 'auto',
           }}
           colors={["#587f76", "#c63637", "#869ead"]} // Green for Won, Red for Lost, Blue for Open
           pointSize={3}
@@ -151,6 +143,8 @@ export default function AccountsARRTrendLine() {
           pointBorderWidth={2}
           pointBorderColor={{ from: 'serieColor' }}
           useMesh={true}
+          enablePointLabel={true} // Enable point labels
+          pointLabel="y" // Label the y-value at each point
           axisBottom={{
             tickSize: 5,
             tickPadding: 5,
@@ -162,7 +156,7 @@ export default function AccountsARRTrendLine() {
             format: (value) => `$${(value / 1000).toLocaleString()}K`,
             tickValues: (function() {
               const maxValue = Math.max(...chartData.flatMap(serie => serie.data.map(point => point.y)));
-              const step = 50000;  // $50,000 interval
+              const step = 50000;
               const ticks = [];
               for (let i = 0; i <= maxValue; i += step) {
                 ticks.push(i);
@@ -183,13 +177,14 @@ export default function AccountsARRTrendLine() {
               itemHeight: 20,
               symbolSize: 12,
               symbolShape: 'circle',
+              itemTextColor: "#869ead", // Set color for the text in the legend
             }
           ]}
           theme={{
             grid: {
               line: {
-                stroke: "#000", 
-                strokeWidth: 1, 
+                stroke: "#000",
+                strokeWidth: 1,
                 strokeDasharray: "2 4",
               },
             },
@@ -207,16 +202,16 @@ export default function AccountsARRTrendLine() {
             },
           }}
           tooltip={({ point }) => (
-            <div 
-              style={{ 
-                padding: '9px 12px', 
-                color: 'white', 
+            <div
+              style={{
+                padding: '9px 12px',
+                color: 'white',
                 background: point.serieColor,
-                borderRadius: '4px'
+                borderRadius: '4px',
               }}
             >
               <strong>{point.serieId}: </strong>
-              {point.data.xFormatted}: 
+              {point.data.xFormatted}:
               ${Math.round(Number(point.data.y) / 1000).toLocaleString()}K
             </div>
           )}

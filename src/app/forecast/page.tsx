@@ -1,4 +1,4 @@
-import LeadGen from "@/forecastComponents/leadGenTop/LeadGen";
+import LeadGen from "@/forecastComponents/leadGen/LeadGen";
 import Sales from "@/forecastComponents/sales/sales";
 import Retention from "@/forecastComponents/retention/retention";
 import Executive from "@/forecastComponents/executive/executive";

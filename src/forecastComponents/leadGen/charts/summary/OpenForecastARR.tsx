@@ -6,18 +6,20 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-export default function QualificationsForecast() {
-  const [forecast, setForecast] = useState<number>(0);
+
+export default function OpenForecastARR() {
+  const [projectedARR, setProjectedARR] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    async function calculateForecast() {
+    async function calculateProjectedARR() {
       try {
         setIsLoading(true);
         const { accounts } = await fetchExcel("/data/crm_data.xlsx");
-        const today = dayjs();
+        const today = dayjs('2025-03-31');
 
-        const qualifiedCounts: { [key: string]: number } = {};
+        const qualifiedARRsLast3Months: number[] = [];
+        const qualifiedCountsLast12Months: { [key: string]: number } = {};
 
         function processDate(dateValue: string | number | Date | undefined): dayjs.Dayjs | null {
           if (dateValue === undefined) return null;
@@ -40,59 +42,54 @@ export default function QualificationsForecast() {
           return dateObj && dateObj.isValid() ? dateObj : null;
         }
 
-        (accounts as { "Qualified Date"?: string | number | Date }[]).forEach((contact) => {
+        for (let i = 0; i < accounts.length; i++) {
+          const contact = accounts[i] as { "Qualified Date"?: string | number | Date; "ARR"?: number };
           const qualifiedDateValue = contact["Qualified Date"];
           const qualifiedDateObj = processDate(qualifiedDateValue);
+          const arr = contact["ARR"] || 0;
+
           if (qualifiedDateObj) {
             const qualifiedMonth = qualifiedDateObj.format("YYYY-MM");
-            qualifiedCounts[qualifiedMonth] = (qualifiedCounts[qualifiedMonth] || 0) + 1;
-          }
-        });
+            const diffInMonths = today.diff(qualifiedDateObj, 'month');
 
-        const last3MonthsData: number[] = [];
-        const last12MonthsData: number[] = [];
-
-        for (let i = 0; i < 12; i++) {
-          const month = today.subtract(i, "month").format("YYYY-MM");
-          const count = qualifiedCounts[month] || 0;
-          if (i < 3) {
-            last3MonthsData.push(count);
+            if (diffInMonths < 3) {
+              qualifiedARRsLast3Months.push(arr);
+            }
+            if (diffInMonths < 12) {
+              qualifiedCountsLast12Months[qualifiedMonth] = (qualifiedCountsLast12Months[qualifiedMonth] || 0) + 1;
+            }
           }
-          last12MonthsData.push(count);
-          if (i >= 12) break;
         }
 
-        const avgLast3Months =
-          last3MonthsData.length > 0
-            ? last3MonthsData.reduce((sum, count) => sum + count, 0) / last3MonthsData.length
+        const avgARRQualifiedLast3Months =
+          qualifiedARRsLast3Months.length > 0
+            ? qualifiedARRsLast3Months.reduce((sum, arr) => sum + arr, 0) / qualifiedARRsLast3Months.length
             : 0;
 
-        const avgLast12Months =
-          last12MonthsData.length > 0
-            ? last12MonthsData.reduce((sum, count) => sum + count, 0) / last12MonthsData.length
-            : 0;
+        const projectedQualificationsNextQuarter =17;
 
-        const calculatedForecast = ((avgLast3Months + avgLast12Months) / 2)*3;
-        setForecast(Math.round(calculatedForecast));
+        const calculatedProjectedARR = projectedQualificationsNextQuarter * avgARRQualifiedLast3Months;
+        setProjectedARR(Math.round(calculatedProjectedARR));
       } catch (error) {
-        console.error("Error calculating forecast:", error);
-        setForecast(0);
+        console.error("Error calculating Projected ARR:", error);
+        setProjectedARR(0);
       } finally {
         setIsLoading(false);
       }
     }
 
-    calculateForecast();
+    calculateProjectedARR();
   }, []);
 
   if (isLoading) {
-    return <div>Loading Forecast...</div>;
+    return <div>Loading Projected ARR...</div>;
   }
 
   return (
     <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-full">
-      <h3 className="text-primary-2 font-semibold mb-2">Project Qualifications Next Quarter</h3>
-      <p className="text-primary-1 text-3xl font-bold">{forecast}</p>
+      <h3 className="text-primary-2 font-semibold mb-2">Expected to Close</h3>
+      <p className="text-primary-1 text-3xl font-bold">${projectedARR.toLocaleString()}  </p>
+      
     </div>
   );
 }

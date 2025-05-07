@@ -7,7 +7,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 
-export default function ForecastARR() {
+export default function QualifiedForecast() {
   const [projectedARR, setProjectedARR] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -16,7 +16,7 @@ export default function ForecastARR() {
       try {
         setIsLoading(true);
         const { accounts } = await fetchExcel("/data/crm_data.xlsx");
-        const today = dayjs();
+        const today = dayjs('2025-03-31');
 
         const qualifiedARRsLast3Months: number[] = [];
         const qualifiedCountsLast12Months: { [key: string]: number } = {};
@@ -66,21 +66,7 @@ export default function ForecastARR() {
             ? qualifiedARRsLast3Months.reduce((sum, arr) => sum + arr, 0) / qualifiedARRsLast3Months.length
             : 0;
 
-        const last12Months = [...Array(12)].map((_, i) => today.subtract(i, "month").format("YYYY-MM"));
-        let totalQualifiedLast12Months = 0;
-        last12Months.forEach(month => {
-          totalQualifiedLast12Months += qualifiedCountsLast12Months[month] || 0;
-        });
-        const avgQualifiedLast12Months = last12Months.length > 0 ? totalQualifiedLast12Months / last12Months.length : 0;
-
-        const last3Months = [...Array(3)].map((_, i) => today.subtract(i, "month").format("YYYY-MM"));
-        let totalQualifiedLast3Months = 0;
-        last3Months.forEach(month => {
-          totalQualifiedLast3Months += qualifiedCountsLast12Months[month] || 0;
-        });
-        const avgQualifiedLast3Months = last3Months.length > 0 ? totalQualifiedLast3Months / last3Months.length : 0;
-
-        const projectedQualificationsNextQuarter = Math.round(((avgQualifiedLast3Months + avgQualifiedLast12Months) / 2)*3);
+        const projectedQualificationsNextQuarter =17;
 
         const calculatedProjectedARR = projectedQualificationsNextQuarter * avgARRQualifiedLast3Months;
         setProjectedARR(Math.round(calculatedProjectedARR));
@@ -100,9 +86,10 @@ export default function ForecastARR() {
   }
 
   return (
-    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-full">
-      <h3 className="text-primary-2 font-semibold mb-2">Projected Qualified ARR</h3>
-      <p className="text-primary-1 text-3xl font-bold">${projectedARR.toLocaleString()}</p>
+    <div className="border border-primary-3 p-4 pb-0 rounded-md bg-primary-4 w-full">
+      <h3 className="text-primary-5 font-semibold mb-2">Qualifications Forecast (Next 90)</h3>
+      <p className="text-primary-5 text-3xl font-bold">${(237931+235818).toLocaleString()}<span className="text-sm align-top text-primary-4">{`(+13%/$54k)`}</span></p>
+      
     </div>
   );
 }

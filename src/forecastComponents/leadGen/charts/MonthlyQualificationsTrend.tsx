@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { fetchExcel } from "@/lib/excelLoader";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList, Line, ComposedChart } from "recharts";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
@@ -27,6 +27,8 @@ interface MonthlyConversionData {
   "1 - Prospecting"?: number;
   "2 - Warm"?: number;
   qualifiedPercentage?: string;
+  qualificationRate?: number;
+  trailing3MonthRate?: number;
 }
 
 export default function MonthlyQualificationsTrend() {
@@ -63,11 +65,11 @@ export default function MonthlyQualificationsTrend() {
           return dateObj && dateObj.isValid() ? dateObj : null;
         }
 
-        const today = dayjs();
+        const today = dayjs('2025-03-31');
         const lastThirteenMonths: string[] = Array.from({ length: 13 }, (_, i) =>
           today.subtract(12 - i, "month").format("YYYY-MM")
         );
-        const mostRecentMonth = today.format("YYYY-MM");
+        const mostRecentMonth = dayjs('2025-03-31').format("YYYY-MM");
 
         // Track monthly conversion data
         const monthlyConversionMap: { [key: string]: MonthlyConversionData } = {};
@@ -106,7 +108,7 @@ export default function MonthlyQualificationsTrend() {
           }
 
           // In-Process Accounts (only for the most recent month)
-          if (mostRecentMonth === dayjs().format("YYYY-MM")) {
+          if (mostRecentMonth === "2025-03") {
             const qualifiedInLast13 = qualifiedDate && lastThirteenMonths.includes(qualifiedDate.format("YYYY-MM"));
             const disqualifiedInLast13 = disqualifiedDate && lastThirteenMonths.includes(disqualifiedDate.format("YYYY-MM"));
 
@@ -128,8 +130,30 @@ export default function MonthlyQualificationsTrend() {
         // Convert map to array and calculate percentages
         const monthlyDataArray = Object.values(monthlyConversionMap).map(data => {
           const total = data.qualifiedAccounts + data.disqualifiedAccounts;
-          const qualifiedPercentage = total > 0 ? `${((data.qualifiedAccounts / total) * 100).toFixed(0)}%` : "0%";
-          return { ...data, qualifiedPercentage };
+          const qualificationRate = total > 0 ? (data.qualifiedAccounts / total) * 100 : 0;
+          const qualifiedPercentage = total > 0 ? `${qualificationRate.toFixed(0)}%` : "0%";
+          
+          return { 
+            ...data, 
+            qualifiedPercentage,
+            qualificationRate // Store the numeric rate for trend line calculations
+          };
+        });
+
+        // Calculate trailing 3-month average for qualification rate
+        monthlyDataArray.forEach((data, index) => {
+          if (index >= 2) {
+            // Get the last 3 months of data
+            const lastThreeMonths = [
+              monthlyDataArray[index],
+              monthlyDataArray[index - 1],
+              monthlyDataArray[index - 2]
+            ];
+            
+            // Calculate average qualification rate
+            const sum = lastThreeMonths.reduce((acc, month) => acc + (month.qualificationRate || 0), 0);
+            data.trailing3MonthRate = sum / 3;
+          }
         });
 
         setMonthlyData(monthlyDataArray);
@@ -148,56 +172,105 @@ export default function MonthlyQualificationsTrend() {
 
   return (
     <div className="border border-primary-3 py-4 rounded-md bg-primary-5 min-h-[200px] w-full">
-      <h2 className="text-primary-3 font-semibold mb-4 pl-4">Monthly Qualifications %</h2>
-      <ResponsiveContainer width="100%" height={200}>
-        <BarChart
+      <h2 className="text-primary-2 font-semibold mb-4 pl-4">Monthly Qualifications %</h2>
+      <ResponsiveContainer width="100%" height={260}>
+        <ComposedChart
           data={monthlyData}
-          margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
+          margin={{ top: 10, right: 20, left: 20, bottom: 10 }}
         >
-        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="month" angle={-45} textAnchor="end" interval={0} tick={{ fontSize: 12 }} />
-          <YAxis tick={{ fontSize: 12 }} />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="month" angle={-45} textAnchor="end" interval={0} tick={{ fontSize: 10 }} />
+          <YAxis 
+            yAxisId="left"
+            tick={{ fontSize: 10 }} 
+            label={{ value: "Accounts", angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 10 } }}
+            domain={[0, 80]}
+          />
+          <YAxis 
+            yAxisId="right" 
+            orientation="right"
+            domain={[0, 60]}
+            tick={{ fontSize: 10 }}
+            label={{ value: "Percentage (%)", angle: 90, position: 'insideRight', style: { textAnchor: 'middle', fontSize: 10  } }}
+            tickFormatter={(value) => `${value}%`}
+          />
 
-          <Tooltip />
-          <Legend verticalAlign="bottom" align="center" height={50} wrapperStyle={{ fontSize: 10,paddingTop: 30 }} />
+          <Tooltip 
+            formatter={(value: any, name) => {
+              if (name === "Trailing 3-Month Qualified %") {
+                return [`${Number(value).toFixed(1)}%`, name];
+              }
+              return [value, name];
+            }}
+          />
+          <Legend 
+            verticalAlign="bottom" 
+            align="center" 
+            height={50} 
+            wrapperStyle={{ fontSize: 10, paddingTop: 30 }} 
+          />
 
           <Bar
+            yAxisId="left"
             dataKey="qualifiedAccounts"
             name="Qualified Accounts"
             stackId="conversion"
             fill="#82ca9d"
-          >
-          </Bar>
+          />
           <Bar
+            yAxisId="left"
             dataKey="disqualifiedAccounts"
             name="Disqualified Accounts"
             stackId="conversion"
-            fill="#8884d8">
-              <LabelList 
-            dataKey="qualifiedPercentage" 
-            position="top" 
-            fill="#fff" 
-            fontSize={12} />
-            </Bar>
+            fill="#8884d8"
+          >
+            <LabelList 
+              dataKey="qualifiedAccounts" 
+              position="top" 
+              fill="#869ead" 
+              fontSize={10} 
+            />
+          </Bar>
           
           <Bar
+            yAxisId="left"
             dataKey="0 - Identified"
             name="In-Process: Identified"
             fill="#a8dadc"
           />
           <Bar
+            yAxisId="left"
             dataKey="1 - Prospecting"
             name="In-Process: Prospecting"
             fill="#457b9d"
           />
           <Bar
+            yAxisId="left"
             dataKey="2 - Warm"
             name="In-Process: Warmed"
             fill="#cdba96"
           />
-        </BarChart>
 
-        
+          {/* Trend line for trailing 3-month qualified percentage */}
+          <Line
+            yAxisId="right"
+            type="monotone"
+            dataKey="trailing3MonthRate"
+            name="Trailing 3-Month Qualified %"
+            stroke="#587f76"
+            strokeWidth={2}
+            dot={{ r: 2 }}
+            activeDot={{ r: 6 }}
+          >
+            <LabelList 
+              dataKey="trailing3MonthRate" 
+              position="top" 
+              fill="#cdba96" 
+              fontSize={10}
+              formatter={(value: any) => value ? `${Number(value).toFixed(0)}%` : ""}
+            />
+          </Line>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   );
