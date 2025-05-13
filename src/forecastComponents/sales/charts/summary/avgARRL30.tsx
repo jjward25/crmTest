@@ -5,12 +5,13 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-export default function TotalArrLastQuarter() {
-  const [totalArr, setTotalArr] = useState<number>(0);
+export default function AverageArrLastThirtyDays() {
+  const [averageArr, setAverageArr] = useState<number>(0);
+  const [dealCount, setDealCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    async function calculateTotalArr() {
+    async function calculateAverageArr() {
       try {
         setIsLoading(true);
         const { accounts } = await fetchExcel("/data/crm_data.xlsx");
@@ -36,12 +37,13 @@ export default function TotalArrLastQuarter() {
           return dateObj && dateObj.isValid() ? dateObj : null;
         }
 
-        // Define last quarter date range (Dec 2024 - Feb 2025)
-        const startDate = dayjs("2024-12-01");
-        const endDate = dayjs("2025-02-28");
+        // Define last 30 days date range from March 31, 2025
+        const endDate = dayjs("2025-03-31");
+        const startDate = endDate.subtract(30, "day");
 
-        // Filter accounts with Close Date in the last quarter and sum their ARR
+        // Filter accounts with Close Date in the last 30 days and calculate average ARR
         let arrSum = 0;
+        let validDeals = 0;
         
         (accounts as { 
             "Closed Date"?: string | number | Date; 
@@ -63,21 +65,25 @@ export default function TotalArrLastQuarter() {
               const arrValue = account["ARR"];
               if (typeof arrValue === "number" && !isNaN(arrValue)) {
                 arrSum += arrValue;
+                validDeals++;
               }
             }
           });
           
-
-        setTotalArr(arrSum);
+        // Calculate average (prevent division by zero)
+        const average = validDeals > 0 ? arrSum / validDeals : 0;
+        setAverageArr(average);
+        setDealCount(validDeals);
       } catch (error) {
-        console.error("Error calculating total ARR:", error);
-        setTotalArr(0);
+        console.error("Error calculating average ARR:", error);
+        setAverageArr(0);
+        setDealCount(0);
       } finally {
         setIsLoading(false);
       }
     }
 
-    calculateTotalArr();
+    calculateAverageArr();
   }, []);
 
   if (isLoading) {
@@ -85,16 +91,16 @@ export default function TotalArrLastQuarter() {
   }
 
   // Format the number for display with commas
-  const formattedArr = new Intl.NumberFormat('en-US', {
+  const formattedAvgArr = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 0
-  }).format(totalArr);
+  }).format(averageArr);
 
   return (
-    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-7/12">
-      <h3 className="text-primary-2 font-semibold mb-2">Last Quarter ARR</h3>
-      <p className="text-primary-1 text-3xl font-bold">{formattedArr}</p>
+    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-1/3">
+      <h3 className="text-primary-2 font-semibold mb-2">Avg ARR (Closed L30 Days)</h3>
+      <p className="text-primary-1 text-3xl font-bold">{formattedAvgArr}</p>
     </div>
   );
 }

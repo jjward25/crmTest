@@ -1,14 +1,19 @@
 "use client"
 import { useState } from 'react'
 import SalesBlurb from "./blurb";
-import TotalArrLastQuarter from './charts/arrLQ';
+import TotalArrLastQuarter from './charts/summary/arrLQ';
 import WinRateByMonth from "./charts/winRate";
 import SegmentTable from "./charts/breakdown/segmentTable";
 import TerritoryTable from "./charts/breakdown/territoryTable";
 import CycleTimeByMonth from './charts/cycleTimeTrend';
-import CycleLQ from './charts/cycleLQ';
-import CycleL12 from './charts/cycleL12';
-import QualifiedForecast from './charts/QualifiedForecast';
+import CycleLQ from './charts/summary/cycleLQ';
+import CycleL12 from './charts/summary/cycleL12';
+import QualifiedForecast from './charts/summary/QualifiedForecast';
+import AverageArrLastThirtyDays from './charts/summary/avgARRL30';
+import AverageArrLast90Days from './charts/summary/avgARRL90';
+import AverageArrLast365Days from './charts/summary/avgARRLY';
+import SegmentARRChart from './charts/segmentMap';
+import TerritoryARRChart from './charts/territoryMap';
 
 export default function Sales() {
   const [isContentVisible, setIsContentVisible] = useState(true)
@@ -38,12 +43,24 @@ export default function Sales() {
                     <CycleLQ/>
                     <CycleL12/>
                   </div>
+                  <div className='flex flex-row gap-2'>
+                    <AverageArrLastThirtyDays/>
+                    <AverageArrLast90Days/>
+                    <AverageArrLast365Days/>
+                  </div>
+
                 </div>
+
 
                 <div className='w-full flex flex-col gap-3'>
                   <WinRateByMonth/>
                   <CycleTimeByMonth/>
                   <p className='text-xs text-primary-3'>{`Both lines should be loosely in-line (and steady or trending down).  In this case Aug+Oct had spikes in qualifications that led to a backlog that spiked cycle times in Sep+Nov.`}</p>
+                  
+                  <div className='flex flex-row gap-2'>
+                    <SegmentARRChart/>
+                    <TerritoryARRChart/>
+                  </div>
                   
                 </div>
               
