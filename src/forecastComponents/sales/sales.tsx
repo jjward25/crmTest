@@ -17,9 +17,19 @@ import TerritoryARRChart from './charts/territoryMap';
 
 export default function Sales() {
   const [isContentVisible, setIsContentVisible] = useState(true)
+  const [isContentVisible2, setIsContentVisible2] = useState(true)
+  const [isContentVisible3, setIsContentVisible3] = useState(true)
 
   const toggleContent = () => {
     setIsContentVisible(!isContentVisible)
+  }
+
+  const toggleContent2 = () => {
+    setIsContentVisible2(!isContentVisible2)
+  }
+
+  const toggleContent3 = () => {
+    setIsContentVisible3(!isContentVisible3)
   }
 
   return (
@@ -49,13 +59,21 @@ export default function Sales() {
                     <AverageArrLast365Days/>
                   </div>
 
+                  <span className='h-[2px] w-full bg-primary-5 my-2'/>
+
+                  <h3 className=''>Sales Forecast Breakdown</h3>
+                  <div className='flex flex-col'>{`[71 Opps] from [134 Leads] at [52% Qualification Rate]`}</div>
+                  <div className='flex flex-col'>{`[28 Closed Won] [40% Win Rate] at [$ACV] for [$Forecast Closed Won]`}</div>
+                  <div className='flex flex-col'>{`Territory - [#] [$]`}</div>
+                  <div className='flex flex-col'>{`Segment - [#] [$]`}</div>
+
                 </div>
 
 
                 <div className='w-full flex flex-col gap-3'>
                   <WinRateByMonth/>
                   <CycleTimeByMonth/>
-                  <p className='text-xs text-primary-3'>{`Both lines should be loosely in-line (and steady or trending down).  In this case Aug+Oct had spikes in qualifications that led to a backlog that spiked cycle times in Sep+Nov.`}</p>
+                  <p className='text-xs text-primary-3'>{`Both lines should appear similar (and steady or trending down).  In this case Aug+Oct had spikes in qualifications that led to a backlog that spiked cycle times in Sep+Nov.`}</p>
                   
                   <div className='flex flex-row gap-2'>
                     <SegmentARRChart/>
@@ -65,15 +83,27 @@ export default function Sales() {
                 </div>
               
               </div>
+              
 
-              <h1 className="text-xl my-4">Sales Breakdown</h1>
-              <SegmentTable/>
-              <TerritoryTable/>
+              <h1 className="text-xl my-4 w-full bg-primary-5 text-primary-3 p-2 rounded-md" onClick={toggleContent2}>Sales Breakdown</h1>
+              {isContentVisible2 && (
+              <>
+                <SegmentTable/>
+                <TerritoryTable/>
+              </>
+              )}
 
-              <h1 className="text-xl my-4">DQ + Loss Breakdown</h1>
-              <p>{`Gross Margins, Discounts`}</p>
-              <p>{`Stage conversions -- SWOT x territory/segment (where did we see our quickest, higher dollar conversions?)`}</p>
-              <p>{`DQs x stage - can we find out timing/budget/use case earlier?`}</p>
+              <h1 className="text-xl my-4 w-full bg-primary-5 text-primary-3 p-2 rounded-md" onClick={toggleContent3}>DQ + Loss Breakdown</h1>
+
+              {isContentVisible3 && (
+              <>
+                <p>{`Gross Margins, Discounts`}</p>
+                <p>{`Stage conversions -- SWOT x territory/segment (where did we see our quickest, higher dollar conversions?)`}</p>
+                <p>{`DQs x stage - can we find out timing/budget/use case earlier?`}</p>
+              </>
+              )}
+
+
               </>)}
             </div>
 

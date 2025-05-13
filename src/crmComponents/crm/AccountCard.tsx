@@ -40,7 +40,7 @@ export function AccountCard({ account, relatedAccounts }: AccountCardProps) {
         )}
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <h2 className={cn("text-xl font-semibold")}>{account.name}</h2>
+        <h2 className={cn("text-xl font-semibold text-primary-2")}>{account.name}</h2>
         <div className={cn("flex items-center gap-6")}>
         <div className={cn(
           "flex items-center gap-2",
@@ -48,7 +48,7 @@ export function AccountCard({ account, relatedAccounts }: AccountCardProps) {
           "bg-primary-4/10 border border-primary-3/20"
         )}>
           <span className="text-sm text-primary-3">Owner</span>
-          <span className="font-medium text-primary-2">{account.owner}</span>
+          <span className="font-medium text-primary-1">{account.owner}</span>
         </div>
 
         <div className={cn(
@@ -57,7 +57,7 @@ export function AccountCard({ account, relatedAccounts }: AccountCardProps) {
           "bg-primary-4/10 border border-primary-3/20"
         )}>
           <span className="text-sm text-primary-3">CSM</span>
-          <span className="font-medium text-primary-2">{account.csm}</span>
+          <span className="font-medium text-primary-1">{account.csm}</span>
         </div>
 
         <div className={cn(
@@ -66,7 +66,7 @@ export function AccountCard({ account, relatedAccounts }: AccountCardProps) {
           "bg-primary-4/10 border border-primary-3/20"
         )}>
           <span className="text-sm text-primary-3">ARR</span>
-          <span className="font-medium text-primary-2">${account.arr.toLocaleString()}</span>
+          <span className="font-medium text-primary-1">${account.arr.toLocaleString()}</span>
         </div>
 
         <div className={cn(
@@ -75,7 +75,7 @@ export function AccountCard({ account, relatedAccounts }: AccountCardProps) {
           "bg-primary-4/10 border border-primary-3/20"
         )}>
           <span className="text-sm text-primary-3">Stage</span>
-          <span className="font-medium text-primary-2">{account.details.stage}</span>
+          <span className="font-medium text-primary-1">{account.details.stage}</span>
         </div>
       </div>
         {isExpanded ? <ChevronUp /> : <ChevronDown />}
