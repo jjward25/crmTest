@@ -8,7 +8,6 @@ dayjs.extend(customParseFormat);
 
 
 export default function QualifiedForecast() {
-  const [projectedARR, setProjectedARR] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -69,10 +68,8 @@ export default function QualifiedForecast() {
         const projectedQualificationsNextQuarter =17;
 
         const calculatedProjectedARR = projectedQualificationsNextQuarter * avgARRQualifiedLast3Months;
-        setProjectedARR(Math.round(calculatedProjectedARR));
       } catch (error) {
         console.error("Error calculating Projected ARR:", error);
-        setProjectedARR(0);
       } finally {
         setIsLoading(false);
       }

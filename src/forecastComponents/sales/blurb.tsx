@@ -7,7 +7,6 @@ import { ChevronDown, ChevronUp } from "lucide-react"
 export default function SalesBlurb() {
 
   const [isExpanded, setIsExpanded] = useState(false)
-  const [isExpanded2, setIsExpanded2] = useState(false)
 
   return (
             

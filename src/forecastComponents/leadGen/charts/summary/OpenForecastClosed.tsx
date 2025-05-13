@@ -61,20 +61,6 @@ export default function ForecastClosedLeads() {
           }
         }
 
-
-        const last12Months = [...Array(12)].map((_, i) => today.subtract(i, "month").format("YYYY-MM"));
-        let totalQualifiedLast12Months = 0;
-        last12Months.forEach(month => {
-          totalQualifiedLast12Months += qualifiedCountsLast12Months[month] || 0;
-        });
-
-        const last3Months = [...Array(3)].map((_, i) => today.subtract(i, "month").format("YYYY-MM"));
-        let totalQualifiedLast3Months = 0;
-        last3Months.forEach(month => {
-          totalQualifiedLast3Months += qualifiedCountsLast12Months[month] || 0;
-        });
-
-
       } catch (error) {
         console.error("Error calculating Projected ARR:", error);
       } finally {
