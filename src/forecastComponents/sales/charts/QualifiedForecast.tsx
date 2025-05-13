@@ -60,14 +60,6 @@ export default function QualifiedForecast() {
           }
         }
 
-        const avgARRQualifiedLast3Months =
-          qualifiedARRsLast3Months.length > 0
-            ? qualifiedARRsLast3Months.reduce((sum, arr) => sum + arr, 0) / qualifiedARRsLast3Months.length
-            : 0;
-
-        const projectedQualificationsNextQuarter =17;
-
-        const calculatedProjectedARR = projectedQualificationsNextQuarter * avgARRQualifiedLast3Months;
       } catch (error) {
         console.error("Error calculating Projected ARR:", error);
       } finally {

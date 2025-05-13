@@ -196,7 +196,7 @@ export default function MonthlyQualificationsTrend() {
           />
 
           <Tooltip 
-            formatter={(value: any, name) => {
+            formatter={(value: number | string, name: string) => {
               if (name === "Trailing 3-Month Qualified %") {
                 return [`${Number(value).toFixed(1)}%`, name];
               }
@@ -267,8 +267,8 @@ export default function MonthlyQualificationsTrend() {
               position="top" 
               fill="#cdba96" 
               fontSize={10}
-              formatter={(value: any) => value ? `${Number(value).toFixed(0)}%` : ""}
-            />
+              formatter={(value: number | undefined) => value ? `${value.toFixed(0)}%` : ""}
+              />
           </Line>
         </ComposedChart>
       </ResponsiveContainer>
