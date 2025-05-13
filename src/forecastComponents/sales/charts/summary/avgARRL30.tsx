@@ -7,7 +7,6 @@ dayjs.extend(customParseFormat);
 
 export default function AverageArrLastThirtyDays() {
   const [averageArr, setAverageArr] = useState<number>(0);
-  const [dealCount, setDealCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -73,11 +72,9 @@ export default function AverageArrLastThirtyDays() {
         // Calculate average (prevent division by zero)
         const average = validDeals > 0 ? arrSum / validDeals : 0;
         setAverageArr(average);
-        setDealCount(validDeals);
       } catch (error) {
         console.error("Error calculating average ARR:", error);
         setAverageArr(0);
-        setDealCount(0);
       } finally {
         setIsLoading(false);
       }

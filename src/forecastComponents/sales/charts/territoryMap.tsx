@@ -152,7 +152,7 @@ export default function TerritoryARRChart() {
       <h2 className="text-xl font-semibold mb-2 text-primary-2">Outcomes by Territory (Last 90 Days)</h2>
       <p className="text-sm text-primary-3 mb-4">From Jan 1, 2025 to Mar 31, 2025</p>
       
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="bg-green-100 p-3 rounded-md">
           <div className="text-sm text-gray-600">Won ARR</div>
           <div className="text-lg font-bold text-green-700">{formatCurrency(totals.won)}</div>
@@ -161,12 +161,7 @@ export default function TerritoryARRChart() {
           <div className="text-sm text-gray-600">Lost ARR</div>
           <div className="text-lg font-bold text-red-700">{formatCurrency(totals.lost)}</div>
         </div>
-        <div className={`${totals.net >= 0 ? 'bg-blue-100' : 'bg-orange-100'} p-3 rounded-md`}>
-          <div className="text-sm text-gray-600">Net ARR</div>
-          <div className={`text-lg font-bold ${totals.net >= 0 ? 'text-blue-700' : 'text-orange-700'}`}>
-            {formatCurrency(totals.net)}
-          </div>
-        </div>
+
       </div>
       
       <div className="h-80">
