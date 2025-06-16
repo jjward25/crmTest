@@ -96,7 +96,7 @@ export default function AverageArrLast365Days() {
 
   return (
     <div className="border border-primary-3 p-4 rounded-md bg-primary-4 w-full">
-      <h3 className="text-primary-2 font-semibold mb-2">Blended Avg (Open PL + L90))</h3>
+      <h3 className="text-primary-2 font-semibold mb-2">Blended Avg (Open PL + L90)</h3>
       <p className="text-primary-1 text-3xl font-bold">{formattedAvgArr}</p>
     </div>
   );
