@@ -56,7 +56,7 @@ export default function Sales() {
           maximumFractionDigits: 0
         }).format(diff)
       : `${sign}${diff}`
-    return `${label} ${formattedDiff} (${sign}${percentChange}% from base forecast)`
+    return `${label} ${formattedDiff} (${sign}${percentChange}%)`
   }
 
   const changes = [
