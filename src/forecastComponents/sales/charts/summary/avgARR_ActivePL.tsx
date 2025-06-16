@@ -62,7 +62,7 @@ export default function AverageArrOpenPipeline() {
   }).format(averageArr);
 
   return (
-    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-full">
+    <div className="border border-primary-2 p-4 rounded-md bg-primary-4 w-full">
       <h3 className="text-primary-2 font-semibold mb-2">Avg ARR (Open Pipeline)</h3>
       <p className="text-primary-1 text-3xl font-bold">{formattedAvgArr}</p>
     </div>

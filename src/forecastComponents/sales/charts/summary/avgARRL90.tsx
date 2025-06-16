@@ -95,7 +95,7 @@ export default function AverageArrLast90Days() {
   }).format(averageArr);
 
   return (
-    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-full">
+    <div className="border border-primary-3 p-4 rounded-md bg-primary-4 w-full">
       <h3 className="text-primary-2 font-semibold mb-2">Last 90 Days</h3>
       <p className="text-primary-1 text-3xl font-bold">{formattedAvgArr}</p>
     </div>
