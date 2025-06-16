@@ -122,7 +122,7 @@ export default function ForecastClosedQtrARR() {
         const projectedQualificationsNextQuarter = Math.round(((avgQualifiedLast3Months + avgQualifiedLast12Months) / 2)*3);
 
         // Use the average ARR from closed won accounts
-        const calculatedProjectedARR = (projectedQualificationsNextQuarter+10) * avgARRClosedWonLast3Months;
+        const calculatedProjectedARR = (projectedQualificationsNextQuarter) * avgARRClosedWonLast3Months;
         setProjectedARR(Math.round(calculatedProjectedARR));
       } catch (error) {
         console.error("Error calculating Projected ARR:", error);

@@ -16,7 +16,7 @@ export default function LGBlurb() {
               className={cn("flex justify-between items-center cursor-pointer p-3",isExpanded && "border-b border-primary-3 ",)}
               onClick={() => setIsExpanded(!isExpanded)}
             >
-              <p className='text-primary-5 font-semibold text-md'>{`(1) How are we doing bringing in qualified leads and dollars, and (2) what's driving that?`}</p>
+              <p className='text-primary-5 font-semibold text-md'>{`(1) How are we doing with bringing in qualified leads and dollars, and (2) what's driving that?`}</p>
               {isExpanded ? <ChevronDown color="#cdba96" /> : <ChevronUp color="#cdba96"/>}
             </div>
             {/** Top Accordion Content */}

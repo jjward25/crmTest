@@ -1,6 +1,5 @@
 import LeadGen from "@/forecastComponents/leadGen/LeadGen";
 import Sales from "@/forecastComponents/sales/sales";
-import Retention from "@/forecastComponents/retention/retention";
 
 export default function Forecast() {
   return (
@@ -17,8 +16,6 @@ export default function Forecast() {
             {/** Qualification & Conversion */}
             <Sales/>            
 
-            {/** Wins & ICPs */}
-            <Retention/>
 
           </div>
 

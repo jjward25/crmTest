@@ -21,7 +21,7 @@ export default function SalesBlurb() {
             {/** Top Accordion Content */}
             {isExpanded && (
               <div className='px-4 pt-2 pb-4'>
-                <p className='text-primary-5 text-sm mt-2'>{`At this point it's all about closing. Are we closing deals as expected, where expected? If not, are we having bad luck on Timing + Budget or are we having other qualification/pipeline issues?`}</p>
+                <p className='text-primary-5 text-sm mt-2'>{`At this point it's all about closing. Are we closing deals as expected, where expected? If not, why?`}</p>
             </div>
             )}
           </div>
