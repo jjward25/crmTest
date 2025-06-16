@@ -38,6 +38,37 @@ export default function Sales() {
   const closedWonDeals = Math.round(qualifiedOpps * (values.winRate / 100))
   const forecastAmount = closedWonDeals * values.acv
 
+  // Calculate default derived values for comparison
+  const defaultQualifiedOpps = Math.round(defaultValues.leads * (defaultValues.qualificationRate / 100))
+  const defaultClosedWonDeals = Math.round(defaultQualifiedOpps * (defaultValues.winRate / 100))
+  const defaultForecastAmount = defaultClosedWonDeals * defaultValues.acv
+
+  // Calculate changes
+  const getChangeText = (current: number, base: number, label: string) => {
+    const diff = current - base
+    const percentChange = Math.round((diff / base) * 100)
+    if (diff === 0) return null
+    const sign = diff > 0 ? '+' : ''
+    const formattedDiff = label === 'Forecast' 
+      ? new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          maximumFractionDigits: 0
+        }).format(diff)
+      : `${sign}${diff}`
+    return `${label} ${formattedDiff} (${sign}${percentChange}% from base forecast)`
+  }
+
+  const changes = [
+    getChangeText(values.leads, defaultValues.leads, 'Leads'),
+    getChangeText(values.qualificationRate, defaultValues.qualificationRate, 'Qualification Rate'),
+    getChangeText(values.winRate, defaultValues.winRate, 'Win Rate'),
+    getChangeText(values.acv, defaultValues.acv, 'ACV'),
+    getChangeText(qualifiedOpps, defaultQualifiedOpps, 'Qualified Opps'),
+    getChangeText(closedWonDeals, defaultClosedWonDeals, 'Closed Won Deals'),
+    getChangeText(forecastAmount, defaultForecastAmount, 'Forecast')
+  ].filter(Boolean)
+
   const handleInputChange = (field: keyof typeof defaultValues, value: string) => {
     // Remove currency formatting for ACV input
     const cleanValue = field === 'acv' ? value.replace(/[$,]/g, '') : value
@@ -161,6 +192,14 @@ export default function Sales() {
           </span>
           {` next 90 days`}
         </div>
+        {changes.length > 0 && (
+          <div className="mt-4 pt-2 border-t border-gray-300 text-sm text-gray-600">
+            <div className="font-semibold mb-1">Changes from Base Forecast:</div>
+            {changes.map((change, index) => (
+              <div key={index}>{change}</div>
+            ))}
+          </div>
+        )}
       </div>
 
       <h1 className="text-xl my-4 w-full bg-primary-5 text-primary-3 p-2 rounded-md" onClick={toggleContent2}>Sales Breakdown</h1>
