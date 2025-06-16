@@ -85,7 +85,7 @@ export default function CycleLQ() {
 
   return (
     <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-full">
-      <h3 className="text-primary-2 font-semibold mb-2">{`Sales Cycle (Closed LQ)`}</h3>
+      <h3 className="text-primary-2 font-semibold mb-2">{`Sales Cycle (Closed L90)`}</h3>
       <p className="text-primary-1 text-3xl font-bold">{avgCycleTime} days</p>
     </div>
   );

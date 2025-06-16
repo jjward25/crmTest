@@ -15,6 +15,8 @@ import AverageArrLast365Days from './charts/summary/avgARRLY';
 import SegmentARRChart from './charts/segmentMap';
 import TerritoryARRChart from './charts/territoryMap';
 import AverageArrOpenPipeline from './charts/summary/avgARR_ActivePL';
+import WinsL90 from './charts/summary/winsL90';
+import WinRateL90 from './charts/summary/winrateL90';
 
 export default function Sales() {
   const [isContentVisible, setIsContentVisible] = useState(true)
@@ -75,13 +77,18 @@ export default function Sales() {
             <CycleLQ/>
             <CycleL12/>
           </div>
-          <div className='flex flex-row gap-2'>
+          <div className='flex flex-row gap-2 border-t-2 border-black pt-2'>
             <AverageArrLastThirtyDays/>
             <AverageArrLast90Days/>
           </div>
           <div className='flex flex-row gap-2'>
             <AverageArrOpenPipeline/>
             <AverageArrLast365Days/>
+          </div>
+
+          <div className='flex flex-row gap-2 border-t-2 border-black pt-2'>
+            <WinRateL90/>
+            <WinsL90/>
           </div>
         </div>
 
