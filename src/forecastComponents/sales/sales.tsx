@@ -11,7 +11,7 @@ import CycleL12 from './charts/summary/cycleL12';
 import QualifiedForecast from './charts/summary/QualifiedForecast';
 import AverageArrLastThirtyDays from './charts/summary/avgARRL30';
 import AverageArrLast90Days from './charts/summary/avgARRL90';
-import AverageArrLast365Days from './charts/summary/avgARRLY';
+import AverageArrLast365Days from './charts/summary/avgARRBlended';
 import SegmentARRChart from './charts/segmentMap';
 import TerritoryARRChart from './charts/territoryMap';
 import AverageArrOpenPipeline from './charts/summary/avgARR_ActivePL';
