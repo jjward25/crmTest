@@ -39,7 +39,9 @@ export default function Sales() {
   const forecastAmount = closedWonDeals * values.acv
 
   const handleInputChange = (field: keyof typeof defaultValues, value: string) => {
-    const numValue = parseInt(value) || 0
+    // Remove currency formatting for ACV input
+    const cleanValue = field === 'acv' ? value.replace(/[$,]/g, '') : value
+    const numValue = parseInt(cleanValue) || 0
     setValues(prev => ({
       ...prev,
       [field]: numValue
@@ -140,8 +142,12 @@ export default function Sales() {
           <span className='text-violet-500'>{closedWonDeals} Closed Won Deals</span>
           {` with a `}
           <input
-            type="number"
-            value={values.acv}
+            type="text"
+            value={new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+              maximumFractionDigits: 0
+            }).format(values.acv)}
             onChange={(e) => handleInputChange('acv', e.target.value)}
             className="w-24 bg-transparent border-b border-violet-500 text-violet-500 focus:outline-none"
           />
