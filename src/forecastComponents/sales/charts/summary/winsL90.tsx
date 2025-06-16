@@ -84,13 +84,6 @@ export default function WinsL90() {
     return <div>Loading ARR data...</div>;
   }
 
-  // Format the number for display with commas
-  const formattedArr = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(totalArr);
-
   return (
     <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-7/12">
       <h3 className="text-primary-2 font-semibold mb-2">Wins L90</h3>

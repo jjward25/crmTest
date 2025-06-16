@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SalesBlurb from "./blurb";
 import TotalArrLastQuarter from './charts/summary/arrLQ';
 import WinRateByMonth from "./charts/winRate";
