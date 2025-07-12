@@ -92,7 +92,7 @@ export default function Sales() {
   }
 
   return (
-    <div className="w-full border-primary-2 border-double border-2 rounded-lg p-4 md:p-8 bg-primary-1">
+    <div className="w-full border-primary-2 border-double border-2 rounded-lg p-4 md:p-8 bg-primary-1 mb-16">
       <h2 className="text-primary-5 w-full font-semibold text-3xl text-center pb-8 drop-shadow-xl cursor-pointer" onClick={toggleContent}>
         {`Conversions`}
       </h2>
@@ -132,7 +132,7 @@ export default function Sales() {
         </div>
       </div>
       
-      <div className='my-2 py-2 border-t-2 border-b-2 border-black'>
+      <div className='my-2 pt-4 pb-8 border-t-2 border-b-2 border-black'>
         <div className="flex justify-between items-center mb-4">
           <h3 className='font-bold text-2xl'>Forecast Breakdown</h3>
           <button 
@@ -202,17 +202,7 @@ export default function Sales() {
         )}
       </div>
 
-      <h1 className="text-xl my-4 w-full bg-primary-5 text-primary-3 p-2 rounded-md" onClick={toggleContent2}>Sales Breakdown</h1>
-      {isContentVisible2 && (
-      <>
-        <div className='flex flex-row gap-2'>
-          <SegmentARRChart/>
-          <TerritoryARRChart/>
-        </div>
-        <SegmentTable/>
-        <TerritoryTable/>
-      </>
-      )}
+     
       </>)}
     </div>
   );

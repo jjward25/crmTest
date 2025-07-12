@@ -166,22 +166,22 @@ export default function QualifiedAccountsTrendTable() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-primary-4 text-primary-5 border border-primary-3">
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-left">Month</th>
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-right">Qualified</th>
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-right">Closed Won</th>
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-right">MoM Change</th>
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-right">3-Mo Avg</th>
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-right">12-Mo Avg</th>
-                <th className="p-2 py-1 text-sm border-b border-primary-3 text-right">Avg ARR</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-left">Month</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-right">Qualified</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-right">Closed Won</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-right">MoM Change</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-right">3-Mo Avg</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-right">12-Mo Avg</th>
+                <th className="p-2 py-1 text-sm border-b border-primary-3 text-primary-2 text-right">Avg ARR</th>
               </tr>
             </thead>
             <tbody>
               {tableData.map((row, index) => (
                 <tr key={row.month} className={`${index % 2 === 0 ? 'bg-primary-5' : 'bg-primary-5' } text-primary-5`}>
-                  <td className="p-2 py-1 text-xs text-primary-3 border-b border-primary-3">{row.month}</td>
-                  <td className="p-2 py-1 text-xs text-primary-3 border-b border-primary-3 text-right">{row.count}</td>
-                  <td className="p-2 py-1 text-xs text-primary-3 border-b border-primary-3 text-right">{row.wonAccounts}</td>
-                  <td className={`p-2 py-1 text-xs text-primary-3 border-b border-primary-3 text-right ${
+                  <td className="p-2 py-1 text-xs text-white border-b border-primary-3">{row.month}</td>
+                  <td className="p-2 py-1 text-xs text-white border-b border-primary-3 text-right">{row.count}</td>
+                  <td className="p-2 py-1 text-xs text-white border-b border-primary-3 text-right">{row.wonAccounts}</td>
+                  <td className={`p-2 py-1 text-xs text-white border-b border-primary-3 text-right ${
                     row.monthOverMonthChange > 0
                       ? 'text-primary-4'
                       : row.monthOverMonthChange < 0
@@ -193,7 +193,7 @@ export default function QualifiedAccountsTrendTable() {
                   <td className="p-2 py-1 text-xs text-primary-3 border-b border-primary-3 text-right">{row.trailing3MonthAvg}</td>
                   <td className="p-2 py-1 text-xs text-primary-3 border-b border-primary-3 text-right">{row.trailing12MonthAvg}</td>
 
-                  <td className="p-2 py-1 text-xs text-primary-3 border-b border-primary-3 text-right">${row.avgARR.toLocaleString()}</td>
+                  <td className="p-2 py-1 text-xs text-white border-b border-primary-3 text-right">${row.avgARR.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
