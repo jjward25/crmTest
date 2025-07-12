@@ -26,7 +26,7 @@ export function RelatedAccounts({ accounts }: RelatedAccountsProps) {
               className={cn(
                 "p-3 rounded-lg",
                 "bg-gradient-to-r from-primary-3/50 to-primary-4",
-                "border border-primary-3",
+                "border border-primary-",
                 "shadow-sm hover:shadow-md transition-all",
                 "cursor-pointer"
               )}

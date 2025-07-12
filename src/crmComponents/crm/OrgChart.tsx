@@ -30,7 +30,7 @@ export function OrgChart({ contacts }: OrgChartProps) {
     <div key={contact.id} className={cn("flex flex-col items-center")}>
       <div className={cn("bg-primary-2 p-2 rounded-lg text-center mb-2")}>
         <div className={cn("font-semibold text-primary-5")}>{contact.name}</div>
-        <div className={cn("text-sm")}>{contact.buyerRoles.join(", ")}</div>
+        <div className={cn("text-sm text-primary-3")}>{contact.buyerRoles.join(", ")}</div>
       </div>
       {contact.children && contact.children.length > 0 && (
         <div className={cn("flex flex-wrap justify-center gap-4 mt-2 pt-2 border-t border-primary-3")}>

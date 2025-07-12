@@ -92,8 +92,8 @@ export default function TotalArrLastQuarter() {
   }).format(totalArr);
 
   return (
-    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-7/12">
-      <h3 className="text-primary-2 font-semibold mb-2">Closed Last Quarter</h3>
+    <div className="border border-primary-3 p-4 rounded-md bg-primary-5 w-full">
+      <h3 className="text-primary-2 font-semibold mb-2">Won Last Quarter</h3>
       <p className="text-primary-1 text-3xl font-bold">{formattedArr}</p>
     </div>
   );

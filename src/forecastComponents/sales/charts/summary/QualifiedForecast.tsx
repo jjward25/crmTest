@@ -77,7 +77,8 @@ export default function QualifiedForecast() {
   return (
     <div className="border border-primary-3 p-4 pb-0 rounded-md bg-primary-2 w-full">
       <h3 className="text-primary-4 font-semibold mb-2">Qualified Forecast (Next 90)</h3>
-      <p className="text-primary-4 text-3xl font-bold">${(237931+202604).toLocaleString()}<span className="text-sm align-top ml-3 text-primary-5">{`(71 Deals)`}</span></p>
+      <p className="text-primary-4 text-3xl font-bold mb-3">${(237931+202604).toLocaleString()}</p>
+
       
     </div>
   );

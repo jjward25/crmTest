@@ -101,7 +101,7 @@ export default function Sales() {
       {isContentVisible && (
       <>
       <div className='flex flex-row gap-2'>
-        <div className='flex flex-col w-1/2 gap-2'>
+        <div className='flex flex-col gap-2 w-1/2'>
           <div className='flex flex-row gap-2'>
             <QualifiedForecast/>
             <TotalArrLastQuarter/>
@@ -125,7 +125,7 @@ export default function Sales() {
           </div>
         </div>
 
-        <div className='w-full flex flex-col gap-3'>
+        <div className='w-1/2 flex flex-col gap-3'>
           <WinRateByMonth/>
           <CycleTimeByMonth/>
           <p className='text-xs text-primary-3'>{`Both lines should appear similar (and steady or trending down).  In this case Aug+Oct had spikes in qualifications that led to a backlog that spiked cycle times in Sep+Nov.`}</p>
