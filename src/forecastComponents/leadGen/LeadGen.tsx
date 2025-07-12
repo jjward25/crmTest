@@ -18,7 +18,7 @@ import OpenForecastARR from './charts/summary/OpenForecastARR'
 import OpenForecastTotalARR from './charts/summary/FinalForecast'
 
 export default function LeadGen() {
-  const [isContentVisible, setIsContentVisible] = useState(false)
+  const [isContentVisible, setIsContentVisible] = useState(true)
 
   const toggleContent = () => {
     setIsContentVisible(!isContentVisible)
